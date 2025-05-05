@@ -313,7 +313,7 @@ public final class Archive: Sequence {
 
 extension Archive.EndOfCentralDirectoryRecord {
 
-    var data: Data {
+    public var data: Data {
         var endOfCDSignature = self.endOfCentralDirectorySignature
         var numberOfDisk = self.numberOfDisk
         var numberOfDiskStart = self.numberOfDiskStart
