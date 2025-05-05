@@ -45,24 +45,24 @@ public struct Entry: Equatable {
     }
 
     public struct LocalFileHeader: DataSerializable {
-        let localFileHeaderSignature = UInt32(localFileHeaderStructSignature)
-        let versionNeededToExtract: UInt16
-        let generalPurposeBitFlag: UInt16
-        let compressionMethod: UInt16
-        let lastModFileTime: UInt16
-        let lastModFileDate: UInt16
-        let crc32: UInt32
-        let compressedSize: UInt32
-        let uncompressedSize: UInt32
-        let fileNameLength: UInt16
-        let extraFieldLength: UInt16
-        static let size = 30
-        let fileNameData: Data
-        let extraFieldData: Data
-        var extraFields: [ExtensibleDataField]?
+        public let localFileHeaderSignature = UInt32(localFileHeaderStructSignature)
+        public let versionNeededToExtract: UInt16
+        public let generalPurposeBitFlag: UInt16
+        public let compressionMethod: UInt16
+        public let lastModFileTime: UInt16
+        public let lastModFileDate: UInt16
+        public let crc32: UInt32
+        public let compressedSize: UInt32
+        public let uncompressedSize: UInt32
+        public let fileNameLength: UInt16
+        public let extraFieldLength: UInt16
+        public static let size = 30
+        public let fileNameData: Data
+        public let extraFieldData: Data
+        public var extraFields: [ExtensibleDataField]?
     }
 
-    struct DataDescriptor<T: BinaryInteger>: DataSerializable {
+    public struct DataDescriptor<T: BinaryInteger>: DataSerializable {
         let data: Data
         let dataDescriptorSignature = UInt32(dataDescriptorStructSignature)
         let crc32: UInt32
@@ -74,37 +74,37 @@ public struct Entry: Equatable {
         static var size: Int { memoryLengthOfSize * 2 + 8 }
     }
 
-    typealias DefaultDataDescriptor = DataDescriptor<UInt32>
-    typealias ZIP64DataDescriptor = DataDescriptor<UInt64>
+    public typealias DefaultDataDescriptor = DataDescriptor<UInt32>
+    public typealias ZIP64DataDescriptor = DataDescriptor<UInt64>
 
     public struct CentralDirectoryStructure: DataSerializable {
-        let centralDirectorySignature = UInt32(centralDirectoryStructSignature)
-        let versionMadeBy: UInt16
-        let versionNeededToExtract: UInt16
-        let generalPurposeBitFlag: UInt16
-        let compressionMethod: UInt16
-        let lastModFileTime: UInt16
-        let lastModFileDate: UInt16
-        let crc32: UInt32
-        let compressedSize: UInt32
-        let uncompressedSize: UInt32
-        let fileNameLength: UInt16
-        let extraFieldLength: UInt16
-        let fileCommentLength: UInt16
-        let diskNumberStart: UInt16
-        let internalFileAttributes: UInt16
-        let externalFileAttributes: UInt32
-        let relativeOffsetOfLocalHeader: UInt32
-        static let size = 46
-        let fileNameData: Data
-        let extraFieldData: Data
-        let fileCommentData: Data
+        public let centralDirectorySignature = UInt32(centralDirectoryStructSignature)
+        public let versionMadeBy: UInt16
+        public let versionNeededToExtract: UInt16
+        public let generalPurposeBitFlag: UInt16
+        public let compressionMethod: UInt16
+        public let lastModFileTime: UInt16
+        public let lastModFileDate: UInt16
+        public let crc32: UInt32
+        public let compressedSize: UInt32
+        public let uncompressedSize: UInt32
+        public let fileNameLength: UInt16
+        public let extraFieldLength: UInt16
+        public let fileCommentLength: UInt16
+        public let diskNumberStart: UInt16
+        public let internalFileAttributes: UInt16
+        public let externalFileAttributes: UInt32
+        public let relativeOffsetOfLocalHeader: UInt32
+        public static let size = 46
+        public let fileNameData: Data
+        public let extraFieldData: Data
+        public let fileCommentData: Data
 
-        var extraFields: [ExtensibleDataField]?
-        var usesDataDescriptor: Bool { return (self.generalPurposeBitFlag & (1 << 3 )) != 0 }
-        var usesUTF8PathEncoding: Bool { return (self.generalPurposeBitFlag & (1 << 11 )) != 0 }
-        var isEncrypted: Bool { return (self.generalPurposeBitFlag & (1 << 0)) != 0 }
-        var isZIP64: Bool {
+        public var extraFields: [ExtensibleDataField]?
+        public var usesDataDescriptor: Bool { return (self.generalPurposeBitFlag & (1 << 3 )) != 0 }
+        public var usesUTF8PathEncoding: Bool { return (self.generalPurposeBitFlag & (1 << 11 )) != 0 }
+        public var isEncrypted: Bool { return (self.generalPurposeBitFlag & (1 << 0)) != 0 }
+        public var isZIP64: Bool {
             // If ZIP64 extended information is existing, try to treat cd as ZIP64 format
             // even if the version needed to extract is lower than 4.5
             return UInt8(truncatingIfNeeded: self.versionNeededToExtract) >= 45 || zip64ExtendedInformation != nil
@@ -207,8 +207,8 @@ public struct Entry: Equatable {
     }
     public let centralDirectoryStructure: CentralDirectoryStructure
     public let localFileHeader: LocalFileHeader
-    let dataDescriptor: DefaultDataDescriptor?
-    let zip64DataDescriptor: ZIP64DataDescriptor?
+    public let dataDescriptor: DefaultDataDescriptor?
+    public let zip64DataDescriptor: ZIP64DataDescriptor?
 
     public static func == (lhs: Entry, rhs: Entry) -> Bool {
         return lhs.path == rhs.path

@@ -10,7 +10,7 @@
 
 import Foundation
 
-protocol ExtensibleDataField {
+public protocol ExtensibleDataField {
     var headerID: UInt16 { get }
     var dataSize: UInt16 { get }
 }
