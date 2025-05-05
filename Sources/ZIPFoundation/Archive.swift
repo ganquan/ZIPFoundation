@@ -115,17 +115,17 @@ public final class Archive: Sequence {
         case v45 = 45
     }
 
-    struct EndOfCentralDirectoryRecord: DataSerializable {
-        let endOfCentralDirectorySignature = UInt32(endOfCentralDirectoryStructSignature)
-        let numberOfDisk: UInt16
-        let numberOfDiskStart: UInt16
-        let totalNumberOfEntriesOnDisk: UInt16
-        let totalNumberOfEntriesInCentralDirectory: UInt16
-        let sizeOfCentralDirectory: UInt32
-        let offsetToStartOfCentralDirectory: UInt32
-        let zipFileCommentLength: UInt16
-        let zipFileCommentData: Data
-        static let size = 22
+    public struct EndOfCentralDirectoryRecord: DataSerializable {
+        public let endOfCentralDirectorySignature = UInt32(endOfCentralDirectoryStructSignature)
+        public let numberOfDisk: UInt16
+        public let numberOfDiskStart: UInt16
+        public let totalNumberOfEntriesOnDisk: UInt16
+        public let totalNumberOfEntriesInCentralDirectory: UInt16
+        public let sizeOfCentralDirectory: UInt32
+        public let offsetToStartOfCentralDirectory: UInt32
+        public let zipFileCommentLength: UInt16
+        public let zipFileCommentData: Data
+        public static let size = 22
     }
 
     /// URL of an Archive's backing file.
@@ -137,7 +137,7 @@ public final class Archive: Sequence {
             fclose(self.archiveFile)
         }
     }
-    var endOfCentralDirectoryRecord: EndOfCentralDirectoryRecord
+    public var endOfCentralDirectoryRecord: EndOfCentralDirectoryRecord
     var zip64EndOfCentralDirectory: ZIP64EndOfCentralDirectory?
     var pathEncoding: String.Encoding?
 
