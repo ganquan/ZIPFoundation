@@ -44,7 +44,7 @@ public struct Entry: Equatable {
         case unused = 20
     }
 
-    struct LocalFileHeader: DataSerializable {
+    public struct LocalFileHeader: DataSerializable {
         let localFileHeaderSignature = UInt32(localFileHeaderStructSignature)
         let versionNeededToExtract: UInt16
         let generalPurposeBitFlag: UInt16
@@ -77,7 +77,7 @@ public struct Entry: Equatable {
     typealias DefaultDataDescriptor = DataDescriptor<UInt32>
     typealias ZIP64DataDescriptor = DataDescriptor<UInt64>
 
-    struct CentralDirectoryStructure: DataSerializable {
+    public struct CentralDirectoryStructure: DataSerializable {
         let centralDirectorySignature = UInt32(centralDirectoryStructSignature)
         let versionMadeBy: UInt16
         let versionNeededToExtract: UInt16
@@ -205,8 +205,8 @@ public struct Entry: Equatable {
         dataOffset += UInt64(self.localFileHeader.extraFieldLength)
         return dataOffset
     }
-    let centralDirectoryStructure: CentralDirectoryStructure
-    let localFileHeader: LocalFileHeader
+    public let centralDirectoryStructure: CentralDirectoryStructure
+    public let localFileHeader: LocalFileHeader
     let dataDescriptor: DefaultDataDescriptor?
     let zip64DataDescriptor: ZIP64DataDescriptor?
 
